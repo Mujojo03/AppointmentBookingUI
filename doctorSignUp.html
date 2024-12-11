@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Doctor Sign Up</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link href="./css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container-fluid h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-6">
+                    <div class="authincation-content">
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="auth-form">
+                                    <h4 class="text-center mb-4">Doctor Sign Up</h4>
+                                    <form onsubmit="doctorSignUp(event)" id="doctor-signup">
+                                        <div class="form-group">
+                                            <label><strong>Department</strong></label>
+                                            <select id="department" name="departmentlist" class="form-control">
+                                                <option value="dentistry">Dentistry</option>
+                                                <option value="pedriatry">Pediatry</option>
+                                                <option value="oncology">Oncology</option>
+                                                <option value="psychology">Psycology</option>
+                                                <option value="neurosurgical clinics">Neurosurgical clinics</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Email</strong></label>
+                                            <input type="email" id="email" class="form-control"
+                                                placeholder="hello@example.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Password</strong></label>
+                                            <input type="password" id="password" class="form-control"
+                                                placeholder="Password">
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <button type="submit" class="btn btn-primary btn-block">Sign me up</button>
+                                        </div>
+                                    </form>
+                                    <div class="new-account mt-3">
+                                        <p>Already have an account? <a class="text-primary"
+                                                href="doctorSignIn.html">Sign
+                                                in</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+    <script src="./js/quixnav-init.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!--endRemoveIf(production)-->
+    <script>
+        var _selectedValue = "";
+
+        $('#department').on('change', function () {
+            _selectedValue = $(this).val();
+            console.log(_selectedValue)
+        });
+        function doctorSignUp() {
+            //to prevent the form from submitting instead refreshing
+            event.preventDefault();
+            console.log("doctorSignUp :: Begin");
+
+            // get the register credentials
+            var email = $('#email').val();
+            var password = $('#password').val();
+            
+            // // var email = $('#firstName').val();
+            // // var password = $('#lastName').val();
+
+            console.log(email);
+            console.log(password);
+            console.log(_selectedValue);
+
+            if (!email || !password || !_selectedValue) {
+                alert("Please Enter All The Required Fields.");
+            }
+
+            console.log("Credentials validation :: success");
+
+            // generate the signup request for the API
+            var signUpRequest = {
+                "email": email,
+                "password": password,
+                "department" : _selectedValue,
+            }
+
+            console.log("API request generation :: success");
+
+            // console.log(signUpRequest); //to test the signUpRequest
+
+            // use ajax to send the API request
+            $.ajax({
+                url: 'http://localhost:5275/api/Registration/register', // url to the api
+                type: 'POST', // API request type
+                contentType: 'application/json', // api request content type 
+                data: JSON.stringify(signUpRequest), // api request data
+                success: function (response) {// function that handles success respose
+                    console.log(response);
+                    alert("Account Successfully Created. You can close this window to proceed to login");
+
+                    window.location.href = "doctorSignIn.html"; //  URL for the login
+
+                },
+                error: function (xhr, status, error) {// function that handles error response
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+        }
+
+
+    </script>
+
+</body>
+
+</html>

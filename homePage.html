@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Appointment Booking Management System</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background-color: #4b0bd5;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* .btn {
+    background-color: #28a745;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #218838;
+} */
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), no-repeat center center/cover;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            padding: 0 20px;
+
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .account-selection {
+            background-color: #f1f1f1;
+            padding: 50px 20px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .account-selection h2 {
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            color: #4b0bd5;
+        }
+
+        .account-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .doctor-btn,
+        .patient-btn {
+            background-color: #4b0bd5;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1em;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .doctor-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .patient-btn:hover {
+            background-color: #0069d9;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <div class="logo">HealthCare+</div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Doctors</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <!-- <a href="#" class="btn appointment-btn">Book Appointment</a> -->
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Out Span Hospital  </h1>
+            <p>Your trusted partner in health and wellness.</p>
+            <p>Book an appointment with our specialists today!</p>
+            <!-- <a href="#" class="btn">Get Started</a> -->
+        </div>
+    </section>
+
+    <!-- Account Type Selection Section -->
+    <section class="account-selection">
+        <h2>Sign Up As</h2>
+        <div class="account-buttons">
+            <button class="btn doctor-btn" onclick="redirectToPage('doctor')">Doctor</button>
+            <!-- <button class="btn patient-btn" onclick="redirectToPage('patient')">Patient</button> -->
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Out Sapn. All Rights Reserved.</p>
+    </footer>
+
+    <!-- <script src="script.js"></script> -->
+    <script>
+        function redirectToPage(accountType) {
+
+            accountType === 'doctor'
+                alert('Redirecting to Doctor Registration/Login');
+                window.location.href = 'doctorSignUp.html';
+
+            // } else if (accountType === 'patient') {
+            //     alert('Redirecting to Patient Appointment Booking');
+            //     window.location.href = 'appointment-booking.html';
+            // }
+        }
+
+    </script>
+</body>
+
+</html>

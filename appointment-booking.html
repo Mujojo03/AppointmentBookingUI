@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Appointment Booking</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link href="./css/style.css" rel="stylesheet">
+
+    <style>
+        /* Style for the pop-up modal */
+        #popup-modal {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8); /* semi-transparent black */
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Style for the message in the pop-up */
+        #popup-message {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        /* Style for the close button */
+        #popup-modal button {
+            background-color: #3f1899;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        #popup-modal button:hover {
+            background-color: #3f1899;
+        }
+    </style>
+
+</head>
+
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container-fluid h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-6">
+                    <div class="authincation-content">
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="auth-form">
+                                    <h3 class="text-center mb-4">Welcome to Outspan Online Appointment Booking</h4><br>
+                                        <h4 class="text-center mb-4">Book Appointment</h4>
+
+                                        <form id="appointment-form">
+
+                                            <div class="form-group">
+                                                <label><strong>Patient Email</strong></label>
+                                                <input type="email" class="form-control" placeholder="hello@example.com"
+                                                    required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label><strong>Patient Name</strong></label>
+                                                <input type="text" class="form-control" placeholder="Your name"
+                                                    id="patientName" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label><strong>Phone Number</strong></label>
+                                                <input type="tel" class="form-control" id="patientPhoneNumber"
+                                                    placeholder="+25412345678" id="status" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label><strong>Description of Illness</strong></label>
+                                                <input type="text" class="form-control"
+                                                    placeholder="brief description of your illness" id="description"
+                                                    required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label><strong>Department</strong></label>
+                                                <select id="department" name="departmentlist" class="form-control">
+                                                    <option value="dentistry">Dentistry</option>
+                                                    <option value="pedriatry">Pediatry</option>
+                                                    <option value="oncology">Oncology</option>
+                                                    <option value="psychology">Psycology</option>
+                                                    <option value="neurosurgical clinics">Neurosurgical clinics</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label><strong>Appointment Date</strong></label>
+                                                <input type="datetime-local" id="appointmentDate" name="birthdaytime"
+                                                    class="form-control" required>
+                                            </div>
+
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-primary btn-block">Book</button>
+                                            </div>
+                                        </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pop-up Modal (Hidden by default) -->
+    <div id="popup-modal">
+        <h4 id="popup-message"></h4>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <!-- scripts -->
+    <script src="./vendor/global/global.min.js"></script>
+    <script src="./js/quixnav-init.js"></script>
+    <script src="./js/custom.min.js"></script>
+
+    <script>
+        // Random messages array
+        const messages = [
+            "Success! Your appointment has been successfully booked.",
+            "Thank you for booking! We look forward to seeing you.",
+            "Your appointment is confirmed. See you soon!",
+            "Booking complete! Your appointment has been scheduled.",
+            "Thank you for your booking. We’ll see you at your appointment."
+        ];
+
+        // Function to display the random message in a pop-up modal
+        function showPopup() {
+            // Select a random message
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+            // Display the random message in the pop-up
+            document.getElementById('popup-message').innerText = randomMessage;
+
+            // Show the modal
+            document.getElementById('popup-modal').style.display = 'block';
+        }
+
+        // Function to close the modal
+        function closePopup() {
+            document.getElementById('popup-modal').style.display = 'none';
+        }
+
+        const form = document.getElementById('appointment-form');
+        function bookingAppointment(){
+            var addAppointmentRequest = {
+            id: 0,
+            patientName: $('#patientName').val(),
+            patientPhoneNumber: $('#patientPhoneNumber').val(),
+            appointmentDate: $('#appointmentDate').val(),
+            department: $('#department').val(),
+            description: $('#description').val(),
+            status: $('#status').val()
+        }
+        $.ajax({
+            url: 'http://localhost:5275/api/Appointments/addAppointment', // url to the api
+            type: 'POST', // API request type
+            contentType: 'application/json', // api request content type 
+            data: JSON.stringify(addAppointmentRequest), // api request data
+            success: function (response) {// function that handles success respose
+                console.log(response);
+                // Call the showPopup function to display the message
+                showPopup();
+            },
+            error: function (xhr, status, error) {// function that handles error response
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        }
+
+        form.addEventListener('submit', function (event) {
+            //to prevent the form from submitting instead refreshing
+            event.preventDefault();
+
+            bookingAppointment();
+
+            //the form to reset after successful submission
+            form.reset();
+        });
+    </script>
+
+</body>
+
+</html>

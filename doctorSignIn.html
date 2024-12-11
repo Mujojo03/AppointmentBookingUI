@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Doctor Sign In</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link href="./css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container-fluid h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-6">
+                    <div class="authincation-content">
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="auth-form">
+                                    <h4 class="text-center mb-4">Doctor Sign In</h4>
+                                    <form onsubmit="doctorSignIn(event)" id="doctor-signin">
+                                        <!-- <div class="form-group">
+                                            <label><strong>Username</strong></label>
+                                            <input type="text" class="form-control" placeholder="username">
+                                        </div> -->
+                                        <div class="form-group">
+                                            <label><strong>Email</strong></label>
+                                            <input type="email" class="form-control" placeholder="hello@example.com" id="email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Password</strong></label>
+                                            <input type="password" class="form-control" placeholder="Password" id="password">
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <button type="submit" class="btn btn-primary btn-block">Sign me in</button>
+                                        </div>
+                                    </form>
+                                    <div class="new-account mt-3">
+                                        <p>Don't have an account? <a class="text-primary" href="doctorSignUp.html">Sign up</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- scripts -->
+
+    <script src="./vendor/global/global.min.js"></script>
+    <script src="./js/quixnav-init.js"></script>
+
+    
+    <script>
+        function doctorSignIn() {
+            //to prevent the form from submitting instead refreshing
+            event.preventDefault();
+            console.log("doctorSignIn :: Begin");
+
+            // get the login credentials
+            var email = $('#email').val();
+            var password = $('#password').val();
+
+            console.log(email);
+            console.log(password);
+
+            if (!email || !password) {
+                alert("Please Enter All The Required Fields.");
+            }
+
+            console.log("Credentials validation :: success");
+
+            // generate the signup request for the API
+            var signInRequest = {
+                "email": email,
+                "password": password
+            }
+
+            console.log("API request generation :: success");
+
+            // use ajax to send the API request
+            $.ajax({
+                url: 'http://localhost:5275/api/Auth/Login', // url to the api
+                type: 'POST', // API request type
+                contentType: 'application/json', // api request content type 
+                data: JSON.stringify(signInRequest), // api request data
+                success: function (response) {// function that handles success respose
+                    console.log(response.user);
+                    alert("Login Successful. You can close this window to proceed to Appointment List");
+
+                    localStorage.setItem("department",response.user.department)
+                    console.log(response.user.department);
+
+                    // Redirect to the account page
+                    window.location.href = "appointment-list.html"
+
+                },
+                error: function (xhr, status, error) {// function that handles error response
+                    alert(xhr.responseJSON.remarks); //text error from api
+                    console.log(xhr.responseJSON.remarks);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+        }
+
+
+    </script>
+
+</body>
+
+</html>
